@@ -3,8 +3,8 @@ const dotenv = require('dotenv')
 
 dotenv.config()
 
-const connect = async (url) => {
-    mongoose.connect(url || process.env.MONGODB_URI );
+const connect = async () => {
+    mongoose.connect( process.env.MONGODB_URI );
 
     mongoose.connection.on("connected", () => {
         console.log("Connected to MongoDB successfully")

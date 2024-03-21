@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const connect = async (url) => {
-    mongoose.connect(url || process.env.MONGODB_URL || 'mongodb://localhost:27017/Sissors');
+    mongoose.connect(url || process.env.MONGODB_URI );
 
     mongoose.connection.on("connected", () => {
         console.log("Connected to MongoDB successfully")
@@ -16,6 +16,9 @@ const connect = async (url) => {
     })
 }
 
-module.exports = {
-    connect
-}
+module.exports =
+  {
+    connect,
+  }
+  
+//   || "mongodb://localhost:27017/Sissors";

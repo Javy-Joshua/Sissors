@@ -2,7 +2,7 @@ PORT=
 
 MONGODB_URL=
 DB-DATABASE=
-BASE=
+BASE=http://<yourhost>:<your port>
 
 
 JWT_SECRET=

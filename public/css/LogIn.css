@@ -1,0 +1,127 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  inline-size: 100%;
+  block-size: 100dvh;
+  background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.5) 50%
+    ),
+    url(/img/1.jpg);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+form {
+  inline-size: 250px;
+  block-size: 380px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.5) 50%
+  );
+
+  border-radius: 20px;
+  padding: 25px;
+
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  aspect-ratio: 1;
+}
+
+form input {
+  inline-size: 200px;
+  block-size: 35px;
+  background-color: #0000;
+  border-bottom: 1px soild brown;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin-block-start: 20px;
+  font-family: "Times New Roman", Times, serif;
+
+  
+}
+
+form input:focus {
+  outline: none;
+  
+}
+
+
+
+.btnn {
+  /* inline-size: 100px; */
+  border: none;
+  width: 200px;
+    height: 40px;
+    background-color: brown;
+    border: none;
+    margin-top: 30px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.4s ease;
+}
+
+.btnn input{
+  
+}
+
+.btnn:hover{
+    background-color: #fff;
+    color: #f55932;
+ }
+
+ .btnn a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+ }
+
+ form .link{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    padding-top: 10px;
+ }
+
+ form .link a{
+    text-decoration: none;
+    color: #f55932;
+ }
+
+ .liw{
+    padding-top: 15px;
+    padding-bottom: 10px;
+    text-align: center;
+ }
+
+/* ::placeholder{
+    color: #fff;
+    font-family: Arial;
+ } */
+
+/* code to center a div/anything properly */
+/* form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: hotpink;
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+} */

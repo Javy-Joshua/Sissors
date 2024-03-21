@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+  <main>
+  <section class="hero">
+        <div class="container row">
+            <table>
+            <tr>
+                <th>Original Url</th>
+                <th>Short Url</th>
+                <th>Click Count</th>
+                <th>Click Location</th>
+                <th>Date</th>
+            </tr>
+            <% urls.forEach(function(urls){ %>
+                <tr>
+                    <td><%= urls.OriginalUrl %></td>
+                    <td><%= urls.ShortUrl %></td>
+                    <td><%= urls.ClickCount %></td>
+                    <td><%= urls.ClickLocation %></td>
+                    <td><%= urls.date %></td>
+                </tr>
+            <% }); %>
+            </table>
+        </div>
+    </section> 
+    </main>
+
+<%- include("partials/footer") %>

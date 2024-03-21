@@ -80,9 +80,6 @@ router.get('/myurl', async( req, res) => {
     });
 })
 
-// router.get("/logout", (req, res) => {
-//     res.clearCookie("jwt");
-//    return res.render("Home")
-// })
+
 
 module.exports = router 

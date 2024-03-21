@@ -30,9 +30,9 @@ app.use(morgan('dev'))
 app.use("/home", (req, res) => {
     res.status(200).render("Home")
 })
-app.use("/dashboard", (req, res) => {
-    res.status(200).render("dashboard")
-})
+// app.use("/dashboard", (req, res) => {
+//     res.status(200).render("dashboard")
+// })
 
 app.use("/users", UserRouter);
 app.use("/views", viewRouter);

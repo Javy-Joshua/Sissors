@@ -3,10 +3,6 @@ const uuid = require("uuid");
 // const { nanoid } = require("nanoid");
 const Cache = require("../helpers/cache.helper");
 const HistoryModel = require("../models/history.model");
-// const UserModel = require("../models/user.model");
-// const jwt = require("jsonwebtoken");
-// const cookieParser = require("cookie-parser");
-
 require("dotenv").config();
 
 const CreateShortUrl = async (req, res) => {
@@ -14,6 +10,7 @@ const CreateShortUrl = async (req, res) => {
   console.log(OriginalUrl);
   // console.log('req is ',req)
   const base = process.env.BASE;
+  // console.log("base value is ",base)
   const ID = uuid.v4();
   if (!OriginalUrl) {
     res.status(400).json({
@@ -24,9 +21,9 @@ const CreateShortUrl = async (req, res) => {
 
   try {
     const cacheKey = `Urls-${OriginalUrl}`;
-    console.log(`cacheKey is ${cacheKey}`);
+    // console.log(`cacheKey is ${cacheKey}`);
     const userId = res.locals.user._id;
-    console.log("user id from controller",userId)
+    // console.log("user id from controller",userId)
     let url = await UrlModel.findOne({ OriginalUrl, user_id: userId });
     
 
@@ -43,7 +40,7 @@ const CreateShortUrl = async (req, res) => {
         ShortUrl: ShortUrl,
         ClickCount: 0,
         user_id: userId,
-        ID: uuid.v4(),
+        ID,
         date: new Date(),
       });
       await url.save();

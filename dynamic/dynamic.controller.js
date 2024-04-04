@@ -5,76 +5,48 @@ const UserModel = require("../models/user.model");
 const IPGeolocationAPI = require("ip-geolocation-api-javascript-sdk");
 const GeolocationParams = require("ip-geolocation-api-javascript-sdk");
 const { date } = require("joi");
+const geoip = require("geoip-lite");
+const satelize = require("satelize");
 
-const ipgeolocationApi = new IPGeolocationAPI(
-  "3937e2d5b8514e3081e922de0a71d1b9",
-  false
-);
 
-// const ClickCount = async (req, res) => {
-//   try {
-//     const url = await UrlModel.findOne({ ID: req.params.urlid });
-//     console.log(req.params);
-//     if (url) {
-//       await UrlModel.updateOne(
-//         { ID: req.params.urlid },
-//         { $inc: { ClickCount: 1 } }
-//       );
-
-//       // Retrieve location data based on the user's IP address
-//       const ipAddress = req.ip;
-//       const location = await getLocation(ipAddress);
-
-//       // Update location array in the database
-//       await UrlModel.updateOne(
-//         { ID: req.params.urlid },
-//         { $push: { ClickLocation: location } }
-//       );
-
-//       return res.redirect(302, url.OriginalUrl);
-//     } else {
-//       res.status(404).json({
-//         message: "Not Found",
-//       });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({
-//       message: "Server not found",
-//       data: null,
-//     });
-//   }
-// };
-
-// Function to retrieve location data based on IP address
 
 const ClickCount = async (req, res) => {
   try {
     const url = await UrlModel.findOne({ ID: req.params.urlid });
-    console.log(req.params);
+    console.log("url is ", url);
+    // console.log("request object is ", req);
     if (url) {
       await UrlModel.updateOne(
-        {
-          ID: req.params.urlid,
-        },
-        {
-          $inc: { ClickCount: 1 },
-        }
+        { ID: req.params.urlid },
+        { $inc: { ClickCount: 1 } }
       );
 
       // Retrieve location data based on the user's IP address
-      //  const ipAddress = req.ip
-      const ipAddress = req.connection.remoteAddress;
-      console.log("ip address is", ipAddress);
-      const location = await getLocation(ipAddress);
+      const ip = req.ip;
+      const ipv4Address = ip.includes("::ffff:") ? ip.split("::ffff:")[1] : ip;
+      console.log("ip address is", ip);
+      console.log("ipv4Address address is", ipv4Address);
 
-      //update location array in the database
-      await UrlModel.updateOne(
-        { ID: req.params.urlid },
-        { $push: { ClickLocation: location } }
-      );
+      satelize.satelize({ ip: ipv4Address }, function (err, payload) {
+        if (err) {
+          console.error("Error fetching location:", err);
+          throw new Error("Failed to fetch location data");
+        }
+        console.log(payload);
 
-      return res.redirect(302, url.OriginalUrl);
+        //update location array in the database
+        UrlModel.updateOne(
+          { ID: req.params.urlid },
+          { $push: { ClickLocation: payload } }
+        )
+          .then(() => {
+            return res.redirect(302, url.OriginalUrl);
+          })
+          .catch((error) => {
+            console.error("Error updating location:", error);
+            throw new Error("Failed to update location data");
+          });
+      });
     } else {
       res.status(404).json({
         message: "Not Found",
@@ -89,27 +61,7 @@ const ClickCount = async (req, res) => {
   }
 };
 
-async function getLocation(ipAddress) {
-  try {
-    const geolocationParams = new GeolocationParams();
-    geolocationParams.setIPAddress(ipAddress);
-    // Fetch location data using IP Geolocation API
-    const response = await ipgeolocationApi.getGeolocation("json", ipAddress);
-    console.log(json);
-    // Extract necessary location information from the response
-    const location = {
-      country: response.country_name,
-      region: response.region_name,
-      city: response.city,
-      latitude: response.latitude,
-      longitude: response.longitude,
-    };
-    return location;
-  } catch (error) {
-    console.error("Error fetching location:", error);
-    return null;
-  }
-}
+
 
 const QrCode = async (req, res) => {
   const { ShortlUrl, OriginalUrl } = req.body;
@@ -182,7 +134,7 @@ const GetAnalytics = async (req, res) => {
     }
 
     const urls = await UrlModel.find({ user_id: userId });
-    console.log(urls);
+    // console.log(urls);
 
     //check if the user is the owner of the urls
     if (urls.length === 0 || urls[0].user_id.toString() !== userId) {

@@ -27,8 +27,15 @@
     <div class="split right">
       <div class="center">
         <h3>Dynamic QR Code</h3>
-        <img src=<%=qr_code %> alt="QR Code">
+        <img id="qrCodeImage" src=<%=qr_code %> alt="QR Code">
+        <button class="downloadBtnn" id="downloadButton">Download QRCode</button>
       </div>
+
+      <div class="icons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=<%= encodeURIComponent(OriginalUrl) %>" target="_blank" ><ion-icon name="logo-facebook"></ion-icon></a>
+                        <a href="https://www.instagram.com/"><ion-icon name="logo-instagram"></ion-icon></a>
+                        <a href="https://twitter.com/intent/tweet?url=<%= encodeURIComponent(OriginalUrl) %>" target="_blank" ><ion-icon name="logo-twitter"></ion-icon></a>
+                    </div>
     </div>
   </main>
   <%- include("partials/footer") %>

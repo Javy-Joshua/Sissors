@@ -116,5 +116,20 @@
 
            </div>
     </section>
+
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+    <script>
+  // JavaScript code to handle download button click
+  const downloadButton = document.getElementById('downloadButton');
+  const qrCodeImage = document.getElementById('qrCodeImage');
+
+  downloadButton.addEventListener('click', () => {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = qrCodeImage.src;
+    downloadLink.download = 'qr_code.png';
+    downloadLink.click();
+  });
+</script>
   </body>
 </html>

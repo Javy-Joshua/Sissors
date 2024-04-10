@@ -436,3 +436,16 @@ main form #Shortner{
 .center {
   margin-block-start: 20px;
 }
+
+.downloadBtnn {
+  margin-block-start: 120px;
+  margin-inline-start: 135px;
+}
+
+.icons {
+    margin-block-start: 10px;
+    margin-inline-start: 170px;
+    width: 200px;
+    /* float: left; */
+    height: 20px;
+}
